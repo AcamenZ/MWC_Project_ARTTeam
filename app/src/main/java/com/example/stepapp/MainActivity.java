@@ -11,6 +11,7 @@ import com.example.stepapp.ui.home.HomeFragment;
 import com.example.stepapp.ui.profile.ProfileFragment;
 import com.example.stepapp.ui.report.DayFragment;
 import com.example.stepapp.ui.report.HourFragment;
+import com.example.stepapp.ui.report.TempFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_hour,R.id.nav_day, R.id.nav_profile)
+                R.id.nav_home, R.id.nav_hour,R.id.nav_day, R.id.nav_temp, R.id.nav_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -103,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = DayFragment.class;
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setTitle("Day");
+                }
+                break;
+            case R.id.nav_temp:
+                fragmentClass = TempFragment.class;
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle("Temperature");
                 }
                 break;
             case R.id.nav_profile:

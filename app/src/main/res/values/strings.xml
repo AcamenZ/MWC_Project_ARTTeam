@@ -31,6 +31,9 @@
     <string name="img_folder">app_images</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_title">Number of steps by hour</string>
+    <string name="temps_report">Temperature report</string>
+    <string name="temps">Temps</string>
+    <string name="menu_temp">Temperature</string>
 
 </resources>
 
