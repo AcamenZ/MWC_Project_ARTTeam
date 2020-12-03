@@ -25,6 +25,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
             getActivity();
         }
 
+        // create periodic work request for the weather data
+        PeriodicWorkRequest weatherDataWorkRequest =
+                new PeriodicWorkRequest.Builder(WeatherDataWorker.class, 15, TimeUnit.MINUTES)
+                        .build();
+
+        // submit the weather data work request
+        WorkManager
+                .getInstance(this.getApplicationContext())
+                .enqueue(weatherDataWorkRequest);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
