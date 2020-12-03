@@ -76,14 +76,14 @@ public class WeatherDataWorker extends Worker {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Log.d("asdf", e.getMessage());
+                        Log.d("WeatherData", e.getMessage());
                     }
                 }
             }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("asdf", error.getMessage());
+                    Log.d("WeatherData", error.getMessage());
                 }
             });
 
