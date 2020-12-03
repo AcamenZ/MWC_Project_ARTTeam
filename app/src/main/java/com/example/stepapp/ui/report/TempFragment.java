@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -41,12 +42,14 @@ public class TempFragment extends Fragment {
 
         // Create column chart
         tempView = root.findViewById(R.id.tempBarChart);
+        APIlib.getInstance().setActiveAnyChartView(tempView);
         Cartesian tempGraph = temperatureGraph();
         tempView.setBackgroundColor("#00000000");
         tempView.setChart(tempGraph);
 
         // Create column chart
         rainView = root.findViewById(R.id.rainBarChart);
+        APIlib.getInstance().setActiveAnyChartView(rainView);
         Cartesian rainGraph = rainGraph();
         rainView.setBackgroundColor("#00000000");
         rainView.setChart(rainGraph);
