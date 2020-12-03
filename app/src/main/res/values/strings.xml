@@ -34,6 +34,7 @@
     <string name="temps_report">Temperature report</string>
     <string name="temps">Temps</string>
     <string name="menu_temp">Temperature</string>
+    <string name="rain_report">Rain report</string>
 
 </resources>
 

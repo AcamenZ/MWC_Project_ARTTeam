@@ -18,7 +18,6 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.stepapp.R;
-import com.example.stepapp.StepAppOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,8 @@ import java.util.Map;
 
 public class TempFragment extends Fragment {
 
-    AnyChartView anyChartView;
+    AnyChartView tempView;
+    AnyChartView rainView;
     public Map<String, Double> tempByDay = null;
 
     @Override
@@ -40,17 +40,21 @@ public class TempFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_temperature, container, false);
 
         // Create column chart
-        anyChartView = root.findViewById(R.id.tempBarChart);
-        anyChartView.setProgressBar(root.findViewById(R.id.loadingBar2));
+        tempView = root.findViewById(R.id.tempBarChart);
+        Cartesian tempGraph = temperatureGraph();
+        tempView.setBackgroundColor("#00000000");
+        tempView.setChart(tempGraph);
 
-        Cartesian cartesian = createColumnChart();
-        anyChartView.setBackgroundColor("#00000000");
-        anyChartView.setChart(cartesian);
+        // Create column chart
+        rainView = root.findViewById(R.id.rainBarChart);
+        Cartesian rainGraph = rainGraph();
+        rainView.setBackgroundColor("#00000000");
+        rainView.setChart(rainGraph);
 
         return root;
     }
 
-    public Cartesian createColumnChart(){
+    public Cartesian temperatureGraph(){
         //Read data from SQLiteDatabase
         //stepsByHour = StepAppOpenHelper.loadStepsByDay(getContext());
 
@@ -92,6 +96,50 @@ public class TempFragment extends Fragment {
         cartesian.yScale().minimum(0);
         cartesian.yAxis(0).title("Temperature");
         cartesian.xAxis(0).title("Day");
+        cartesian.animation(true);
+
+        return cartesian;
+    }
+
+    public Cartesian rainGraph() {
+// Create and get the cartesian coordinate system for column chart
+        Cartesian cartesian = AnyChart.column();
+
+        List<DataEntry> data = new ArrayList<>();
+        data.add(new ValueDataEntry("30/11/2020", 4.1));
+        data.add(new ValueDataEntry("01/12/2020", 2.5));
+        data.add(new ValueDataEntry("02/12/2020", 1.8));
+        data.add(new ValueDataEntry("03/12/2020", 3.5));
+        data.add(new ValueDataEntry("04/12/2020", 0.7));
+
+        // Add the data to column chart and get the columns
+        Column column = cartesian.column(data);
+
+        // Modify the UI of the chart
+        column.fill("#1EB980");
+        column.stroke("#1EB980");
+
+        // Modifying properties of tooltip
+        column.tooltip()
+                .titleFormat("At day: {%X}")
+                .format("{%Value}{groupsSeparator: } Temps")
+                .anchor(Anchor.RIGHT_TOP);
+
+        // Modify column chart tooltip properties
+        column.tooltip()
+                .position(Position.RIGHT_TOP)
+                .offsetX(0d)
+                .offsetY(5);
+
+        // Modifying properties of cartesian
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+        cartesian.yScale().minimum(0);
+
+        // Modify the UI of the cartesian
+        cartesian.yAxis(0).title("Millimeters");
+        cartesian.xAxis(0).title("Day");
+        cartesian.background().fill("#00000000");
         cartesian.animation(true);
 
         return cartesian;
