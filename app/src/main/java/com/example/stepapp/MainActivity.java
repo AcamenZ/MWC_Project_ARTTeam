@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         // create periodic work request for the weather data
         PeriodicWorkRequest weatherDataWorkRequest =
-                new PeriodicWorkRequest.Builder(WeatherDataWorker.class, 15, TimeUnit.MINUTES)
+                new PeriodicWorkRequest.Builder(WeatherDataWorker.class, 6, TimeUnit.HOURS)
                         .build();
 
         // submit the weather data work request
