@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_temp:
                 fragmentClass = TempFragment.class;
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle("Temperature");
+                    getSupportActionBar().setTitle("Weather");
                 }
                 break;
             case R.id.nav_profile:
