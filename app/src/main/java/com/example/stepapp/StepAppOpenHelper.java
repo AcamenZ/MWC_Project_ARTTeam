@@ -1,12 +1,16 @@
 package com.example.stepapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
+import java.util.TimeZone;
 
+
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,13 +66,13 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
             KEY_ID + " INTEGER PRIMARY KEY, " + KEY_DAY + " TEXT, " + KEY_HOUR + " TEXT, "
             + KEY_TIMESTAMP + " TEXT);";
     public static final String CREATE_TABLE_SQL2 ="CREATE TABLE " + TABLE_NAME_PA +"(" +
-            ID_PA + "INTEGER PRIMARY KEY," + NAME  + "VARCHAR," + MIN_TEMP + "FLOAT," + MAX_TEMP +"FLOAT," + O_MIN_TEMP +"FLOAT," +
-            O_MAX_TEMP +"FLOAT," + O_MIN_VIS + "FLOAT," + MIN_WIND + "FLOAT," + MAX_WIND + "FLOAT," + O_MIN_WIND_SPEED + "FLOAT," +
-            O_MAX_WIND_SPEED + "FLOAT," + MIN_RAIN + "FLOAT," + MAX_RAIN + "FLOAT," + O_MIN_RAIN + "FLOAT," + O_MAX_RAIN + "FLOAT," +
-            MIN_SNOW + "FLOAT," + MAX_SNOW + "FLOAT," + O_MIN_SNOW + "FLOAT," + O_MAX_SNOW + "FLOAT," + O_DAYTIME + "BOOLEAN);";
+            ID_PA + " INTEGER PRIMARY KEY, " + NAME  + " VARCHAR, " + MIN_TEMP + " FLOAT, " + MAX_TEMP +" FLOAT, " + O_MIN_TEMP +" FLOAT, " +
+            O_MAX_TEMP + " FLOAT, " + O_MIN_VIS + " FLOAT, " + MIN_WIND + " FLOAT, " + MAX_WIND + " FLOAT, " + O_MIN_WIND_SPEED + " FLOAT, " +
+            O_MAX_WIND_SPEED + " FLOAT, " + MIN_RAIN + " FLOAT, " + MAX_RAIN + " FLOAT, " + O_MIN_RAIN + " FLOAT, " + O_MAX_RAIN + " FLOAT, " +
+            MIN_SNOW + " FLOAT, " + MAX_SNOW + " FLOAT, " + O_MIN_SNOW + " FLOAT, " + O_MAX_SNOW + " FLOAT, " + O_DAYTIME + " BOOLEAN);";
     public static final String CREATE_TABLE_SQL3 = "CREATE TABLE " + TABLE_NAME_PAR +" (" +
-            ID_PAR + "INTEGER PRIMARY KEY," + PA_id  + "INT," + DATE + "DATETIME," + RATING +"INT," + REASON +"VARCHAR," +
-            DATE_PUSH +"DATETIME," + SENT + "BOOLEAN);";
+            ID_PAR + " INTEGER PRIMARY KEY, " + PA_id  + " INT, " + DATE + " DATETIME, " + RATING +" INT, " + REASON +" VARCHAR, " +
+            DATE_PUSH + " DATETIME, " + SENT + " BOOLEAN);";
     public static final String CREATE_TABLE_SQL4 = "CREATE TABLE forecast_weather_data(\n" +
         "\tid INTEGER NOT NULL PRIMARY KEY,\n" +
         "\tdatetime DATETIME,\n" +
@@ -119,6 +123,62 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // nothing to do here
     }
+/*
+    public static void loadvalueinPAR(Context context, String notification){
+
+
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase databaseR = databaseHelper.getReadableDatabase();
+        SQLiteDatabase databaseW = databaseHelper.getWritableDatabase();
+
+        String day;
+        String hour;
+
+        Cursor cursor = databaseR.query(StepAppOpenHelper.forecast_weather_data, null, where, whereArgs, null,
+                null, null );
+
+        int score10= 1; //-5, 30, 15, 25, 5, 0, 40, 5, 30, 0, 0, 0, 0, 0, 0, 0, 0;
+        int score20= 2; //0, 25, 10, 20, 10, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0;
+        int score30= 10; //0, 25, 5, 20, 15, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0;
+        int score40= 3; //10, 30, 15, 25, 20, 0, 25, 5, 20, 0, 0, 0, 0, 0, 0, 0, 0;
+
+
+        int score = Math.max(score10, Math.max(score20, Math.max(score30,score40)));
+
+        long timeInMillis = System.currentTimeMillis() ;
+        SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+        jdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+        String date = jdf.format(timeInMillis);
+
+
+
+
+        // Get the date, the day and the hour
+        day = date.substring(0,10);
+        hour = date.substring(11,13);
+
+        ContentValues values = new ContentValues();
+        values.put(StepAppOpenHelper.DATE, day);
+        values.put(StepAppOpenHelper.RATING,score);
+        values.put(StepAppOpenHelper.REASON, );
+        values.put(StepAppOpenHelper.DATE_PUSH, );
+        values.put(StepAppOpenHelper.SENT, true);
+        databaseW.insert(StepAppOpenHelper.TABLE_NAME_PAR, null, values);
+
+        /* Possible notification message
+1.Hey it's nice outside how about some physical activity?
+2.It's a shame to waste a beautiful day like today, do some physical activity :)
+3.Are you planning to exercise today? It's a great day outside.
+4.Make some physical activity would be a good idea today, take advantage of this beutiful day.
+5.Have you already done physical activity today? If the answer is no, get out of the house, it's nice outside.
+6.Today it is better to do some activities at home, the weather is bad.
+7.The weather today is not favorable for physical activity, tomorrow will be better.
+8.Today, you could stay home and get some rest or do some physical activity.
+9.Postpone your physical activity outdoors until tomorrow.
+10.I hope you have something to do at home, I don't recommend you to do physical activity outside today.
+
+
+    }*/
 
 
 
