@@ -24,6 +24,7 @@ import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.enums.MarkerType;
 import com.anychart.graphics.vector.Stroke;
+import com.example.stepapp.StepAppOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class TempFragment extends Fragment {
     AnyChartView windSpeedView;
     AnyChartView humidityView;
     public Map<String, Double> tempByDay = null;
+    public Map<String, Integer> pressureByDay = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -181,16 +183,22 @@ public class TempFragment extends Fragment {
 
     public Cartesian pressureGraph() {
 
+        //Read data from SQLiteDatabase
+        pressureByDay = StepAppOpenHelper.loadPressureByDay(getContext());
+
         // Create and get the cartesian coordinate system for line chart
         Cartesian cartesian = AnyChart.line();
 
         // Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("30/11/2020", 983.0));
+        /*data.add(new ValueDataEntry("30/11/2020", 983.0));
         data.add(new ValueDataEntry("01/12/2020", 978.0));
         data.add(new ValueDataEntry("02/12/2020", 975.0));
         data.add(new ValueDataEntry("03/12/2020", 979.0));
-        data.add(new ValueDataEntry("04/12/2020", 985.0));
+        data.add(new ValueDataEntry("04/12/2020", 985.0));*/
+
+        for (Map.Entry<String, Integer> entry : pressureByDay.entrySet())
+            data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
 
         // Set the data for line chart
         cartesian.data(data);

@@ -336,6 +336,31 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 6. Return the map with hours and number of steps
         return map;
     }
+
+    public static Map<String, Integer> loadPressureByDay(Context context) {
+        Map<String,Integer> map = new HashMap<>();
+
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery("SELECT datetime, pressure  FROM forecast_weather_data " +
+                "GROUP BY datetime ORDER BY datetime ASC ", new String [] {});
+
+        for (int index=0; index < cursor.getCount(); index++){
+            String tmpKey = cursor.getString(0);
+            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+
+            // Put the data from the database into the map
+            map.put(tmpKey, tmpValue);
+            cursor.moveToNext();
+        }
+        // 5. Close the cursor and database
+        cursor.close();
+        database.close();
+
+        // 6. Return the map with dates and pressures
+        return map;
+    }
 }
 
 
