@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.Date;
 import java.util.TimeZone;
 
 
@@ -97,6 +99,25 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         "\tcity_name VARCHAR(50)\n" +
     ")";
 
+    public static final String CREATE_TABLE_SQL5 = "CREATE TABLE historical_weather_data(\n" +
+        "\tid INTEGER NOT NULL PRIMARY KEY,\n" +
+        "\tdatetime DATETIME,\n" +
+        "\tlongitude FLOAT,\n" +
+        "\tlatitude FLOAT,\n" +
+        "\ttemp FLOAT,\n" +
+        "\tfeels_like FLOAT,\n" +
+        "\tpressure INT,\n" +
+        "\thumidity INT,\n" +
+        "\tvisibility INT,\n" +
+        "\twind_speed FLOAT,\n" +
+        "\twind_deg FLOAT,\n" +
+        "\tcloudiness FLOAT,\n" +
+        "\tsunrise DATETIME,\n" +
+        "\tsunset DATETIME,\n" +
+        "\tdescription VARCHAR(50),\n" +
+        "\tcity_name VARCHAR(50)\n" +
+        ")";
+
     // The constructor
     public StepAppOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -110,6 +131,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SQL2);
         db.execSQL(CREATE_TABLE_SQL3);
         db.execSQL(CREATE_TABLE_SQL4);
+        db.execSQL(CREATE_TABLE_SQL5);
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (10, walking, -5, 30, 15, 25, 5, 0, 40, 5, 30, 0, 0, 0, 0, 0, 0, 0, 0, False)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (20, running, 0, 25, 10, 20, 10, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0, False)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (30, cycling, 0, 25, 5, 20, 15, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0, True)");
@@ -343,20 +365,26 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
-        Cursor cursor = database.rawQuery("SELECT datetime, pressure  FROM forecast_weather_data " +
-                "GROUP BY datetime ORDER BY datetime ASC ", new String [] {});
+        Cursor cursor = database.query(
+                "forecast_weather_data",
+                new String[] { "id", "datetime", "pressure" },
+                null, null, // selection, selectionArgs
+                "datetime", null, "datetime", null);
 
-        for (int index=0; index < cursor.getCount(); index++){
-            String tmpKey = cursor.getString(0);
-            Integer tmpValue = Integer.parseInt(cursor.getString(1));
-
-            // Put the data from the database into the map
-            map.put(tmpKey, tmpValue);
-            cursor.moveToNext();
+        try {
+            while(cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                Date date = new Date(cursor.getLong(1)*1000);
+                Integer pressure = cursor.getInt(2);
+                String tmpKey = cursor.getString(cursor.getColumnIndexOrThrow("datetime"));
+                Integer tmpValue = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("pressure")));
+                map.put(tmpKey, tmpValue);
+            }
+        } finally {
+            cursor.close();
+            database.close();
         }
-        // 5. Close the cursor and database
-        cursor.close();
-        database.close();
+
 
         // 6. Return the map with dates and pressures
         return map;

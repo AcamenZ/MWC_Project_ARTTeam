@@ -75,14 +75,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // create periodic work request for the weather data
-        PeriodicWorkRequest weatherDataWorkRequest =
-                new PeriodicWorkRequest.Builder(WeatherDataWorker.class, 6, TimeUnit.HOURS)
+        PeriodicWorkRequest forecastWeatherDataWorkRequest =
+                new PeriodicWorkRequest.Builder(ForecastWeatherDataWorker.class, 6, TimeUnit.HOURS)
+                        .build();
+        PeriodicWorkRequest historicalWeatherDataWorkRequest =
+                new PeriodicWorkRequest.Builder(HistoricalWeatherDataWorker.class, 1, TimeUnit.HOURS)
                         .build();
 
         // submit the weather data work request
         WorkManager
                 .getInstance(this.getApplicationContext())
-                .enqueue(weatherDataWorkRequest);
+                .enqueue(forecastWeatherDataWorkRequest);
+        WorkManager
+                .getInstance(this.getApplicationContext())
+                .enqueue(historicalWeatherDataWorkRequest);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
