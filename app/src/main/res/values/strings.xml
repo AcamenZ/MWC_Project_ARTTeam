@@ -38,6 +38,9 @@
     <string name="pressure_report">Pressure report</string>
     <string name="windspeed_report">Wind Speed report</string>
     <string name="humidity_report">Humidity report</string>
+    <string name="rank_report">Rankings report</string>
+    <string name="menu_rank">Ranking</string>
+    <string name="today_string">Today</string>
 
 </resources>
 

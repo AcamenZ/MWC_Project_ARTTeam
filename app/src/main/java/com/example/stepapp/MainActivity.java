@@ -14,6 +14,7 @@ import com.example.stepapp.ui.profile.ProfileFragment;
 import com.example.stepapp.ui.report.DayFragment;
 import com.example.stepapp.ui.report.HourFragment;
 import com.example.stepapp.ui.report.TempFragment;
+import com.example.stepapp.ui.report.RankFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_hour,R.id.nav_day, R.id.nav_temp, R.id.nav_profile)
+                R.id.nav_home, R.id.nav_hour,R.id.nav_day, R.id.nav_temp, R.id.nav_rank, R.id.nav_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -166,6 +167,12 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = TempFragment.class;
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setTitle("Weather");
+                }
+                break;
+            case R.id.nav_rank:
+                fragmentClass = RankFragment.class;
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle("Ranking");
                 }
                 break;
             case R.id.nav_profile:

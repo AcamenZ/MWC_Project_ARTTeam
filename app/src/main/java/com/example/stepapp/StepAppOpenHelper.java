@@ -58,6 +58,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_PAR = "Physical_activities_rankings";
     public static final String ID_PAR ="id_r";
     public static final String PA_id="physical_activity_id";
+    public static final String NAME_PA = "name_pa";
     public static final String DATE="datetime";
     public static final String RATING="rating";
     public static final String REASON="reason";
@@ -75,8 +76,8 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
             O_MAX_WIND_SPEED + " FLOAT, " + MIN_RAIN + " FLOAT, " + MAX_RAIN + " FLOAT, " + O_MIN_RAIN + " FLOAT, " + O_MAX_RAIN + " FLOAT, " +
             MIN_SNOW + " FLOAT, " + MAX_SNOW + " FLOAT, " + O_MIN_SNOW + " FLOAT, " + O_MAX_SNOW + " FLOAT, " + O_DAYTIME + " BOOLEAN);";
     public static final String CREATE_TABLE_SQL3 = "CREATE TABLE " + TABLE_NAME_PAR +" (" +
-            ID_PAR + " INTEGER PRIMARY KEY, " + PA_id  + " INT, " + DATE + " TEXT, " + RATING +" INT, " + REASON +" VARCHAR, " +
-            DATE_PUSH + " DATETIME, " + SENT + " BOOLEAN);";
+            ID_PAR + " INTEGER PRIMARY KEY, " + PA_id  + " INT, " + NAME_PA + " TEXT, " + DATE + " TEXT, " + RATING +" INT, " + REASON +" TEXT, " +
+            DATE_PUSH + " TEXT, " + SENT + " BOOLEAN);";
     public static final String CREATE_TABLE_SQL4 = "CREATE TABLE forecast_weather_data(\n" +
         "\tid INTEGER NOT NULL PRIMARY KEY,\n" +
         "\tdatetime DATETIME,\n" +
@@ -100,6 +101,23 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         "\tsunset DATETIME,\n" +
         "\tcity_name VARCHAR(50)\n" +
     ")";
+
+    public static final String sql1 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('100', '10', 'walking', '14/12/2020', '80', '', '', '')";
+    public static final String sql2 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('101', '20', 'running', '14/12/2020', '70', '', '', '')";
+    public static final String sql3 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('102', '30', 'cycling', '14/12/2020', '60', '', '', '')";
+    public static final String sql4 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('103', '40', 'hiking', '14/12/2020', '50', '', '', '')";
+    public static final String sql5 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('104', '10', 'walking', '15/12/2020', '90', '', '', '')";
+    public static final String sql6 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('105', '20', 'running', '15/12/2020', '80', '', '', '')";
+    public static final String sql7 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('106', '30', 'cycling', '15/12/2020', '70', '', '', '')";
+    public static final String sql8 = "INSERT INTO " + TABLE_NAME_PAR + " (" + ID_PAR + ", " + PA_id  + ", " + NAME_PA + ", " + DATE + ", " + RATING + ", " + REASON + ", " +
+            DATE_PUSH + ", " + SENT + ") VALUES ('107', '40', 'hiking', '15/12/2020', '60', '', '', '')";
 
     public static final String CREATE_TABLE_SQL5 = "CREATE TABLE historical_weather_data(\n" +
         "\tid INTEGER NOT NULL PRIMARY KEY,\n" +
@@ -134,18 +152,27 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SQL3);
         db.execSQL(CREATE_TABLE_SQL4);
         db.execSQL(CREATE_TABLE_SQL5);
+        db.execSQL(sql1);
+        db.execSQL(sql2);
+        db.execSQL(sql3);
+        db.execSQL(sql4);
+        db.execSQL(sql5);
+        db.execSQL(sql6);
+        db.execSQL(sql7);
+        db.execSQL(sql8);
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (10, walking, -5, 30, 15, 25, 5, 0, 40, 5, 30, 0, 0, 0, 0, 0, 0, 0, 0, False)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (20, running, 0, 25, 10, 20, 10, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0, False)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (30, cycling, 0, 25, 5, 20, 15, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0, True)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (40, hiking, 10, 30, 15, 25, 20, 0, 25, 5, 20, 0, 0, 0, 0, 0, 0, 0, 0, True)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (100, 10, 14/12/2020, 80, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (101, 20, 14/12/2020, 70, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (102, 30, 14/12/2020, 60, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (103, 40, 14/12/2020, 50, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (104, 10, 15/12/2020, 90, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (105, 20, 15/12/2020, 80, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (106, 30, 15/12/2020, 70, null, null, false)");
-        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (107, 40, 15/12/2020, 60, null, null, false)");
+
+        /*db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (100, 10, 'walking', '14/12/2020', 80, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (101, 20, 'running', '14/12/2020', 70, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (102, 30, 'cycling', '14/12/2020', 60, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (103, 40, 'hiking', '14/12/2020', 50, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (104, 10, walking, 15/12/2020, 90, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (105, 20, running, 15/12/2020, 80, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (106, 30, cycling, 15/12/2020, 70, null, null, false);");
+        db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, name_pa, datetime, rating, reason, push_out_time, sent) VALUES (107, 40, hiking, 15/12/2020, 60, null, null, false);"); */
 
 
 
@@ -398,6 +425,36 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
         // 6. Return the map with dates and pressures
+        return map;
+    }
+
+    public static Map<String, Integer> loadRankingByDay(Context context) {
+        Map<String,Integer> map = new HashMap<>();
+
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                "Physical_activities_rankings",
+                new String[] { "id_r", "name_pa", "rating" },
+                null, null, // selection, selectionArgs
+                null, null, "datetime", null);
+
+        try {
+            while(cursor.moveToNext()) {
+                String activity_name = cursor.getString(1);
+                Integer rating = cursor.getInt(2);
+                map.put(activity_name, rating);
+            }
+        } catch (Exception e) {
+            Log.d("loadRankingByDay", e.toString());
+        } finally {
+            cursor.close();
+            database.close();
+        }
+
+
+        // 6. Return the map with activity names and ratings
         return map;
     }
 }

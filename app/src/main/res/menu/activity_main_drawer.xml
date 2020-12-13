@@ -22,6 +22,10 @@
             android:icon="@drawable/ic_charts"
             android:title="@string/menu_temp" />
         <item
+            android:id="@+id/nav_rank"
+            android:icon="@drawable/ic_charts"
+            android:title="@string/menu_rank" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_person"
             android:title="@string/menu_profile" />

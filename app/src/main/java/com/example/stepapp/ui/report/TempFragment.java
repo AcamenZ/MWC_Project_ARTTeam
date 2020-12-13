@@ -191,11 +191,6 @@ public class TempFragment extends Fragment {
 
         // Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
-        /*data.add(new ValueDataEntry("30/11/2020", 983.0));
-        data.add(new ValueDataEntry("01/12/2020", 978.0));
-        data.add(new ValueDataEntry("02/12/2020", 975.0));
-        data.add(new ValueDataEntry("03/12/2020", 979.0));
-        data.add(new ValueDataEntry("04/12/2020", 985.0));*/
 
         for (Map.Entry<String, Integer> entry : pressureByDay.entrySet())
             data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
