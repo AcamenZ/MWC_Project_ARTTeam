@@ -1,0 +1,13 @@
+#Sun Dec 13 19:34:01 CET 2020
+path.3=classes3.dex
+path.2=classes2.dex
+path.1=classes.dex
+path.0=classes.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.3=/Users/acamenzind/Desktop/MWC_Project_ARTTeam/app/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex
+base.2=/Users/acamenzind/Desktop/MWC_Project_ARTTeam/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.1=/Users/acamenzind/Desktop/MWC_Project_ARTTeam/app/build/intermediates/dex/debug/mergeProjectDexDebug/classes.dex
+base.0=/Users/acamenzind/Desktop/MWC_Project_ARTTeam/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex

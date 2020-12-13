@@ -75,7 +75,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
             O_MAX_WIND_SPEED + " FLOAT, " + MIN_RAIN + " FLOAT, " + MAX_RAIN + " FLOAT, " + O_MIN_RAIN + " FLOAT, " + O_MAX_RAIN + " FLOAT, " +
             MIN_SNOW + " FLOAT, " + MAX_SNOW + " FLOAT, " + O_MIN_SNOW + " FLOAT, " + O_MAX_SNOW + " FLOAT, " + O_DAYTIME + " BOOLEAN);";
     public static final String CREATE_TABLE_SQL3 = "CREATE TABLE " + TABLE_NAME_PAR +" (" +
-            ID_PAR + " INTEGER PRIMARY KEY, " + PA_id  + " INT, " + DATE + " DATETIME, " + RATING +" INT, " + REASON +" VARCHAR, " +
+            ID_PAR + " INTEGER PRIMARY KEY, " + PA_id  + " INT, " + DATE + " TEXT, " + RATING +" INT, " + REASON +" VARCHAR, " +
             DATE_PUSH + " DATETIME, " + SENT + " BOOLEAN);";
     public static final String CREATE_TABLE_SQL4 = "CREATE TABLE forecast_weather_data(\n" +
         "\tid INTEGER NOT NULL PRIMARY KEY,\n" +
@@ -138,6 +138,14 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (20, running, 0, 25, 10, 20, 10, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0, False)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (30, cycling, 0, 25, 5, 20, 15, 0, 30, 5, 25, 0, 0, 0, 0, 0, 0, 0, 0, True)");
         //db.execSQL("INSERT INTO " + TABLE_NAME_PA+ "(id, name, min_temp, max_temp, optimal_min_temp, optimal_max_temp, optimal_min_visibility, min_wind_speed, max_wind_speed, optimal_min_wind, optimal_max_wind, min_rain_1h, max_rain_1h, optimal_min_rain_1h, optimal_max_rain_1h, min_snow_1h, max_snow_1h, optimal_min_snow_1h, optimal_max_snow_1h, optimal_daytime) VALUES (40, hiking, 10, 30, 15, 25, 20, 0, 25, 5, 20, 0, 0, 0, 0, 0, 0, 0, 0, True)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (100, 10, 14/12/2020, 80, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (101, 20, 14/12/2020, 70, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (102, 30, 14/12/2020, 60, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (103, 40, 14/12/2020, 50, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (104, 10, 15/12/2020, 90, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (105, 20, 15/12/2020, 80, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (106, 30, 15/12/2020, 70, null, null, false)");
+        //db.execSQL("INSERT INTO " + TABLE_NAME_PAR+ "(id_r, physical_activity_id, datetime, rating, reason, push_out_time, sent) VALUES (107, 40, 15/12/2020, 60, null, null, false)");
 
 
 
