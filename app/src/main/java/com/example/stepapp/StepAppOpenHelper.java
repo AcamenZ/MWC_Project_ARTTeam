@@ -379,7 +379,6 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
                 SimpleDateFormat formatOut = new SimpleDateFormat("EEE a");
                 String date = formatOut.format(formatIn.parse (cursor.getString(1)));
                 Integer pressure = cursor.getInt(2);
-                Log.d("loadPressureByDay", formatOut.format(date));
                 map.put(date, pressure);
             }
         } catch (Exception e) {
