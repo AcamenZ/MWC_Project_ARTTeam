@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -373,13 +375,15 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
         try {
             while(cursor.moveToNext()) {
-                int id = cursor.getInt(0);
-                Date date = new Date(cursor.getLong(1)*1000);
+                SimpleDateFormat formatIn = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'XXX YYYY");
+                SimpleDateFormat formatOut = new SimpleDateFormat("EEE a");
+                String date = formatOut.format(formatIn.parse (cursor.getString(1)));
                 Integer pressure = cursor.getInt(2);
-                String tmpKey = cursor.getString(cursor.getColumnIndexOrThrow("datetime"));
-                Integer tmpValue = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("pressure")));
-                map.put(tmpKey, tmpValue);
+                Log.d("loadPressureByDay", formatOut.format(date));
+                map.put(date, pressure);
             }
+        } catch (Exception e) {
+            Log.d("loadPressureByDay", e.toString());
         } finally {
             cursor.close();
             database.close();

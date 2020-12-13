@@ -35,7 +35,12 @@ public class ForecastWeatherDataWorker extends WeatherDataWorker {
 
     @Override
     public Result doWork() {
+
+        lat = getInputData().getString("lat");
+        lon = getInputData().getString("lon");
+
         Log.d("ForecastWeatherData", getApiUrl(apiEndpoint));
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, getApiUrl(apiEndpoint), null, new Response.Listener<JSONObject>() {
 
@@ -57,7 +62,7 @@ public class ForecastWeatherDataWorker extends WeatherDataWorker {
                                 JSONObject clouds = data.getJSONObject("clouds");
                                 JSONObject sys = data.getJSONObject("sys");
                                 ContentValues values = new ContentValues();
-                                values.put("datetime", String.valueOf(new Date(main.getLong("dt") * 1000)));
+                                values.put("datetime", String.valueOf(new Date(data.getLong("dt") * 1000)));
                                 values.put("longitude", coord.getDouble("lon"));
                                 values.put("latitude", coord.getDouble("lat"));
                                 values.put("temp", main.getDouble("temp") - 273.15);

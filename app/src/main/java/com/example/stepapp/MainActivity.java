@@ -2,7 +2,9 @@ package com.example.stepapp;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.Toast;
@@ -12,6 +14,9 @@ import com.example.stepapp.ui.profile.ProfileFragment;
 import com.example.stepapp.ui.report.DayFragment;
 import com.example.stepapp.ui.report.HourFragment;
 import com.example.stepapp.ui.report.TempFragment;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -25,12 +30,16 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FusedLocationProviderClient fusedLocationClient;
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -43,9 +52,30 @@ public class MainActivity extends AppCompatActivity {
     private boolean runningQOrLater =
             android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
 
+    protected static String lat = "46.0037";
+    protected static String lon = "8.9511";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            lat = Double.valueOf(location.getLatitude()).toString();
+                            lon = Double.valueOf(location.getLongitude()).toString();
+                        }
+                    }
+                });
+        }
+
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,12 +104,19 @@ public class MainActivity extends AppCompatActivity {
             getActivity();
         }
 
+        Data.Builder data = new Data.Builder();
+        data.putString("lat", lat);
+        data.putString("lon", lon);
+
         // create periodic work request for the weather data
         PeriodicWorkRequest forecastWeatherDataWorkRequest =
                 new PeriodicWorkRequest.Builder(ForecastWeatherDataWorker.class, 6, TimeUnit.HOURS)
+                        .setInputData(data.build())
                         .build();
+
         PeriodicWorkRequest historicalWeatherDataWorkRequest =
                 new PeriodicWorkRequest.Builder(HistoricalWeatherDataWorker.class, 1, TimeUnit.HOURS)
+                        .setInputData(data.build())
                         .build();
 
         // submit the weather data work request

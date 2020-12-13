@@ -33,6 +33,10 @@ public class HistoricalWeatherDataWorker extends WeatherDataWorker {
 
     @Override
     public Result doWork() {
+
+        lat = getInputData().getString("lat");
+        lon = getInputData().getString("lon");
+
         Log.d("HistoricalWeatherData", getApiUrl(apiEndpoint, (long) (System.currentTimeMillis() / 1000 - 3600)));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, getApiUrl(apiEndpoint, (long) (System.currentTimeMillis() / 1000 - 3600)), null, new Response.Listener<JSONObject>() {
@@ -59,7 +63,6 @@ public class HistoricalWeatherDataWorker extends WeatherDataWorker {
                             values.put("cloudiness", main.getInt("clouds"));
                             values.put("sunrise", String.valueOf(new Date(((long)main.getInt("sunrise")) * 1000)));
                             values.put("sunset", String.valueOf(new Date(((long)main.getInt("sunset")) * 1000)));
-                            values.put("city_name", response.getString("name"));
                             database.insert(tableName, null, values);
 
                         } catch (JSONException e) {

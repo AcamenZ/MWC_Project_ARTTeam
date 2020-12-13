@@ -23,8 +23,8 @@ import java.util.Date;
 
 abstract public class WeatherDataWorker extends Worker {
     protected static final String apiKey = "3cbfd6817134b07b4fc72b6743692dd8";
-    protected static final String lat = "46.0037";
-    protected static final String lon = "8.9511";
+    protected static String lat = "46.0037";
+    protected static String lon = "8.9511";
 
     protected String getApiUrl(String endpoint) {
         return String.format(
