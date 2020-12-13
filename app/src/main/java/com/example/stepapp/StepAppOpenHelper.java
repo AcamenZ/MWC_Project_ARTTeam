@@ -371,7 +371,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
                 "forecast_weather_data",
                 new String[] { "id", "datetime", "pressure" },
                 null, null, // selection, selectionArgs
-                "datetime", null, "datetime", null);
+                null, null, "datetime", null);
 
         try {
             while(cursor.moveToNext()) {
