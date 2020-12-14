@@ -40,6 +40,8 @@ public class TempFragment extends Fragment {
     AnyChartView humidityView;
     public Map<String, Double> tempByDay = null;
     public Map<String, Integer> pressureByDay = null;
+    public Map<String, Double> windSpeedByDay = null;
+    public Map<String, Integer> humidityByDay = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,20 +92,16 @@ public class TempFragment extends Fragment {
 
     public Cartesian temperatureGraph(){
         //Read data from SQLiteDatabase
-        //stepsByHour = StepAppOpenHelper.loadStepsByDay(getContext());
+        tempByDay = StepAppOpenHelper.loadTempByDay(getContext());
 
         // Create and get the cartesian coordinate system for column chart
         Cartesian cartesian = AnyChart.column();
 
         // Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("30/11/2020", 20.5));
-        data.add(new ValueDataEntry("01/12/2020", 10.8));
-        data.add(new ValueDataEntry("02/12/2020", 12.0));
-        data.add(new ValueDataEntry("03/12/2020", 5.6));
-        data.add(new ValueDataEntry("04/12/2020", 1.8));
-        //for (Map.Entry<String,Integer> entry : stepsByHour.entrySet())
-            //data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
+
+        for (Map.Entry<String,Double> entry : tempByDay.entrySet())
+            data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
 
         // Set the data for column chart and get the columns
         Column column = cartesian.column(data);
@@ -115,15 +113,15 @@ public class TempFragment extends Fragment {
 
         // Add tooltip to the bar charts and modify its properties
         column.tooltip()
-                .titleFormat("Day: {%X}")
+                .titleFormat("Temperature: {%X}")
                 .position(Position.RIGHT_TOP)
                 .anchor(Anchor.RIGHT_TOP)
                 .offsetX(0d)
                 .offsetY(5)
-                .format("{%Value}{groupsSeparator: } Steps");
+                .format("{%Value}{groupsSeparator: } Temps");
 
 
-        // Modify the UI of twindSpeedGraphhe Cartesian
+        // Modify the UI of the Cartesian
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
         cartesian.background().fill("#00000000");
@@ -142,11 +140,11 @@ public class TempFragment extends Fragment {
 
         // Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("30/11/2020", 4.1));
-        data.add(new ValueDataEntry("01/12/2020", 2.5));
-        data.add(new ValueDataEntry("02/12/2020", 1.8));
-        data.add(new ValueDataEntry("03/12/2020", 3.5));
-        data.add(new ValueDataEntry("04/12/2020", 0.7));
+        data.add(new ValueDataEntry("14/12/2020", 4.1));
+        data.add(new ValueDataEntry("15/12/2020", 2.5));
+        data.add(new ValueDataEntry("16/12/2020", 1.8));
+        data.add(new ValueDataEntry("17/12/2020", 3.5));
+        data.add(new ValueDataEntry("18/12/2020", 0.7));
 
         // Add the data to column chart and get the columns
         Column column = cartesian.column(data);
@@ -157,8 +155,8 @@ public class TempFragment extends Fragment {
 
         // Modifying properties of tooltip
         column.tooltip()
-                .titleFormat("At day: {%X}")
-                .format("{%Value}{groupsSeparator: } Temps")
+                .titleFormat("Rain: {%X}")
+                .format("{%Value}{groupsSeparator: } Millimeters")
                 .anchor(Anchor.RIGHT_TOP);
 
         // Modify column chart tooltip properties
@@ -235,16 +233,17 @@ public class TempFragment extends Fragment {
 
     public Cartesian windSpeedGraph() {
 
+        //Read data from SQLiteDatabase
+        windSpeedByDay = StepAppOpenHelper.loadWindSpeedByDay(getContext());
+
         // Create and get the cartesian coordinate system for line chart
         Cartesian cartesian = AnyChart.line();
 
         // Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("30/11/2020", 1.7));
-        data.add(new ValueDataEntry("01/12/2020", 1.5));
-        data.add(new ValueDataEntry("02/12/2020", 3.5));
-        data.add(new ValueDataEntry("03/12/2020", 2.7));
-        data.add(new ValueDataEntry("04/12/2020", 4.1));
+
+        for (Map.Entry<String, Double> entry : windSpeedByDay.entrySet())
+            data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
 
         // Set the data for line chart
         cartesian.data(data);
@@ -286,16 +285,17 @@ public class TempFragment extends Fragment {
 
     public Cartesian humidityGraph() {
 
+        //Read data from SQLiteDatabase
+        humidityByDay = StepAppOpenHelper.loadHumidityByDay(getContext());
+
         // Create and get the cartesian coordinate system for line chart
         Cartesian cartesian = AnyChart.line();
 
         // Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("30/11/2020", 75));
-        data.add(new ValueDataEntry("01/12/2020", 68));
-        data.add(new ValueDataEntry("02/12/2020", 89));
-        data.add(new ValueDataEntry("03/12/2020", 78));
-        data.add(new ValueDataEntry("04/12/2020", 85));
+
+        for (Map.Entry<String, Integer> entry : humidityByDay.entrySet())
+            data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
 
         // Set the data for line chart
         cartesian.data(data);

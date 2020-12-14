@@ -397,6 +397,38 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         return map;
     }
 
+    public static Map<String, Double> loadTempByDay(Context context) {
+        Map<String,Double> map = new HashMap<>();
+
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                "forecast_weather_data",
+                new String[] { "id", "datetime", "temp" },
+                null, null, // selection, selectionArgs
+                null, null, "datetime", null);
+
+        try {
+            while(cursor.moveToNext()) {
+                SimpleDateFormat formatIn = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'XXX YYYY");
+                SimpleDateFormat formatOut = new SimpleDateFormat("EEE a");
+                String date = formatOut.format(formatIn.parse (cursor.getString(1)));
+                Double temp = cursor.getDouble(2);
+                map.put(date, temp);
+            }
+        } catch (Exception e) {
+            Log.d("loadTempByDay", e.toString());
+        } finally {
+            cursor.close();
+            database.close();
+        }
+
+
+        // 6. Return the map with dates and temperatures
+        return map;
+    }
+
     public static Map<String, Integer> loadPressureByDay(Context context) {
         Map<String,Integer> map = new HashMap<>();
 
@@ -426,6 +458,71 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
         // 6. Return the map with dates and pressures
+        return map;
+    }
+
+
+    public static Map<String, Double> loadWindSpeedByDay(Context context) {
+        Map<String,Double> map = new HashMap<>();
+
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                "forecast_weather_data",
+                new String[] { "id", "datetime", "wind_speed" },
+                null, null, // selection, selectionArgs
+                null, null, "datetime", null);
+
+        try {
+            while(cursor.moveToNext()) {
+                SimpleDateFormat formatIn = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'XXX YYYY");
+                SimpleDateFormat formatOut = new SimpleDateFormat("EEE a");
+                String date = formatOut.format(formatIn.parse (cursor.getString(1)));
+                Double temp = cursor.getDouble(2);
+                map.put(date, temp);
+            }
+        } catch (Exception e) {
+            Log.d("loadWindSpeedByDay", e.toString());
+        } finally {
+            cursor.close();
+            database.close();
+        }
+
+
+        // 6. Return the map with dates and wind speeds
+        return map;
+    }
+
+    public static Map<String, Integer> loadHumidityByDay(Context context) {
+        Map<String,Integer> map = new HashMap<>();
+
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                "forecast_weather_data",
+                new String[] { "id", "datetime", "humidity" },
+                null, null, // selection, selectionArgs
+                null, null, "datetime", null);
+
+        try {
+            while(cursor.moveToNext()) {
+                SimpleDateFormat formatIn = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'XXX YYYY");
+                SimpleDateFormat formatOut = new SimpleDateFormat("EEE a");
+                String date = formatOut.format(formatIn.parse (cursor.getString(1)));
+                Integer humidity = cursor.getInt(2);
+                map.put(date, humidity);
+            }
+        } catch (Exception e) {
+            Log.d("loadHumidityByDay", e.toString());
+        } finally {
+            cursor.close();
+            database.close();
+        }
+
+
+        // 6. Return the map with dates and humidity
         return map;
     }
 
