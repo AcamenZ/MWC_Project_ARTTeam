@@ -175,15 +175,17 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         db.execSQL(sql10);
         db.execSQL(sql11);
         db.execSQL(sql12);
-
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // nothing to do here
     }
-/*
+
+/*  The following method computes the score for each physical activity and adds in the table "Physical_activities_rankings" the activity with the highest score along with its id and name.
+    Then, it will automatically send a notification to the user. At the same time, it adds in the table date and time of the notification.
+    Based on the score, this method will choose the right notification. Below 50%, it chooses one message among the "negative" ones, while over 50% it chooses one message among the "positive" ones.
+
     public static void loadvalueinPAR(Context context, String notification){
 
 
@@ -211,8 +213,6 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         String date = jdf.format(timeInMillis);
 
 
-
-
         // Get the date, the day and the hour
         day = date.substring(0,10);
         hour = date.substring(11,13);
@@ -225,11 +225,11 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         values.put(StepAppOpenHelper.SENT, true);
         databaseW.insert(StepAppOpenHelper.TABLE_NAME_PAR, null, values);
 
-        /* Possible notification message
+        /* Possible notification messages
 1.Hey it's nice outside how about some physical activity?
 2.It's a shame to waste a beautiful day like today, do some physical activity :)
 3.Are you planning to exercise today? It's a great day outside.
-4.Make some physical activity would be a good idea today, take advantage of this beutiful day.
+4.Make some physical activity would be a good idea today, take advantage of this beautiful day.
 5.Have you already done physical activity today? If the answer is no, get out of the house, it's nice outside.
 6.Today it is better to do some activities at home, the weather is bad.
 7.The weather today is not favorable for physical activity, tomorrow will be better.
@@ -238,7 +238,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 10.I hope you have something to do at home, I don't recommend you to do physical activity outside today.
 
 
-    }*/
+    } */
 
 
 
@@ -398,6 +398,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     }
 
     public static Map<String, Double> loadTempByDay(Context context) {
+
         Map<String,Double> map = new HashMap<>();
 
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
@@ -463,6 +464,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
     public static Map<String, Double> loadWindSpeedByDay(Context context) {
+
         Map<String,Double> map = new HashMap<>();
 
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
@@ -495,6 +497,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     }
 
     public static Map<String, Integer> loadHumidityByDay(Context context) {
+
         Map<String,Integer> map = new HashMap<>();
 
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
@@ -527,6 +530,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     }
 
     public static Map<String, Integer> loadRankingByDay(Context context) {
+
         Map<String,Integer> map = new HashMap<>();
 
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);

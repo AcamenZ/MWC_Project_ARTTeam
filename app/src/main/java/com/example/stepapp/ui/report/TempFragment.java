@@ -91,6 +91,7 @@ public class TempFragment extends Fragment {
     }
 
     public Cartesian temperatureGraph(){
+
         //Read data from SQLiteDatabase
         tempByDay = StepAppOpenHelper.loadTempByDay(getContext());
 
